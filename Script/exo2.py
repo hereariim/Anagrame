@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""
+EX2 SCRIPT
+"""
 import timeit
 
 start = timeit.default_timer()

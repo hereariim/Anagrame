@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 EX3 SCRIPT
@@ -45,7 +46,7 @@ class MyProcess(multiprocessing.Process):
 
 
 if __name__ == '__main__':
-    with open('dico.txt.txt','r',encoding="UTF-8") as f:    
+    with open('/usr/share/dict/words','r',encoding="UTF-8") as f:    
         stocker1 = []
         stocker2 = []
         stocker3 = []
@@ -115,7 +116,7 @@ if __name__ == '__main__':
     X = []
     while not q.empty():
         X.append(q.get(block=True))
-
+    
     dico_anagram={}
     for I in X:
         for J in I[0]:
@@ -125,9 +126,18 @@ if __name__ == '__main__':
     for I in X:
         for J in I[1]:
             dico_anagram[I[0][I[1].index(J)]]=dico_anagram[I[0][I[1].index(J)]]+J
-
-    import pandas as pd
-    tabv=pd.DataFrame(dico_anagram)
-    print(tabv)
-
-    print(round(timeit.default_timer()-start,2),'s')
+    
+    
+    K=list(dico_anagram.keys())
+    V=list(dico_anagram.values())
+    from tabulate import tabulate
+    M=[[K[i],V[i]] for i in range(len(K))]
+    print(tabulate(M,headers=["Nombre d'Anagrame","Nombre d'ensemble"]))
+    with open(f'Anagrame_ensemble.csv','w',newline='') as f:
+            write = csv.DictWriter(f, fieldnames=["Nombre d'Anagrame","Nombre d'ensemble"])
+            write.writeheader()
+            for k in dico_anagram.keys():
+                write.writerow({"Nombre d'Anagrame":k,"Nombre d'ensemble":dico_anagram[k]})
+    f.close()
+        
+    print('Total time',round(timeit.default_timer()-start,2),'s')

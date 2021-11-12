@@ -1,13 +1,14 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 EX2 SCRIPT
 """
 import timeit
+import csv
 
 start = timeit.default_timer()
 
-with open('dico.txt.txt','r',encoding="UTF-8") as f:
-    
+with open('/usr/share/dict/words','r',encoding="UTF-8") as f:
     stocker = []
     for ligne in f:
         stocker.append(ligne[:-1])
@@ -30,12 +31,20 @@ import pandas as pd
 newV = []
 for t in dico.values():
     newV.append(len(t))
-from collections import Counter
-ens = list(Counter(newV).values())
-ana = list(Counter(newV).keys())
-newens = [Counter(newV)[key] for key in sorted(ana)]
-tabv={'nombre densemble':newens,'nombre danagrame dans cette ensemble':sorted(ana)}      
-tabv=pd.DataFrame(tabv)
-print(tabv) 
+from collections import Counter,OrderedDict
 
-print(round(timeit.default_timer()-start,2),'s')
+dico = dict(Counter(newV))
+dico_sort = dict(OrderedDict(sorted(dico.items())))
+
+from tabulate import tabulate
+M=[[k,dico_sort[k]] for k in dico_sort.keys()]
+print(tabulate(M,headers=["Nombre d'Anagrame","Nombre d'ensemble"]))
+
+with open(f'Anagrame_ensemble_ex2.csv','w',newline='') as f:
+    write = csv.DictWriter(f, fieldnames=["Nombre d'Anagrame","Nombre d'ensemble"])
+    write.writeheader()
+    for k in dico_sort.keys():
+        write.writerow({"Nombre d'Anagrame":k,"Nombre d'ensemble":dico_sort[k]})
+f.close()
+
+print("Temps total d'exécution",round(timeit.default_timer()-start,2),'s')

@@ -120,18 +120,21 @@ if __name__ == '__main__':
     for tab in X:
         for i in range(len(tab[0])):
             dico_anagram[tab[0][i]]=tab[1][i]+dico_anagram[tab[0][i]]
+            
+    from collections import OrderedDict
     
+    dico_anagram_sort = dict(OrderedDict(sorted(dico_anagram.items())))
     
-    K=list(dico_anagram.keys())
-    V=list(dico_anagram.values())
     from tabulate import tabulate
-    M=[[K[i],V[i]] for i in range(len(K))]
+    
+    M=[[i,dico_anagram_sort[i]] for i in dico_anagram_sort.keys()]
     print(tabulate(M,headers=["Nombre d'Anagrame","Nombre d'ensemble"]))
+    
     with open(f'Anagrame_ensemble.csv','w',newline='') as f:
             write = csv.DictWriter(f, fieldnames=["Nombre d'Anagrame","Nombre d'ensemble"])
             write.writeheader()
-            for k in dico_anagram.keys():
-                write.writerow({"Nombre d'Anagrame":k,"Nombre d'ensemble":dico_anagram[k]})
+            for k in dico_anagram_sort.keys():
+                write.writerow({"Nombre d'Anagrame":k,"Nombre d'ensemble":dico_anagram_sort[k]})
     f.close()
         
     print("Temps total d'exécution",round(timeit.default_timer()-start,2),'s')

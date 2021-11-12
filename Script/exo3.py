@@ -117,9 +117,9 @@ if __name__ == '__main__':
             if J not in dico_anagram.keys():
                 dico_anagram[J]=0
     
-    for I in X:
-        for J in I[1]:
-            dico_anagram[I[0][I[1].index(J)]]=dico_anagram[I[0][I[1].index(J)]]+J
+    for tab in X:
+        for i in range(len(tab[0])):
+            dico_anagram[tab[0][i]]=tab[1][i]+dico_anagram[tab[0][i]]
     
     
     K=list(dico_anagram.keys())

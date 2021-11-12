@@ -105,8 +105,7 @@ if __name__ == '__main__':
 
     for i in tasks:
         i.join()
-    print('Terminé')
-    print(round(timeit.default_timer()-start,2),'s')
+    print('Multiprocessing terminé ',round(timeit.default_timer()-start,2),'s')
 
     X = []
     while not q.empty():
@@ -135,4 +134,4 @@ if __name__ == '__main__':
                 write.writerow({"Nombre d'Anagrame":k,"Nombre d'ensemble":dico_anagram[k]})
     f.close()
         
-    print('Total time',round(timeit.default_timer()-start,2),'s')
+    print("Temps total d'exécution",round(timeit.default_timer()-start,2),'s')

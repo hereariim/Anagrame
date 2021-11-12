@@ -40,7 +40,6 @@ class MyProcess(multiprocessing.Process):
 
         ens = list(Counter(newV).values())
         ana = list(Counter(newV).keys())
-        #newens = [Counter(newV)[key] for key in sorted(ana)]
         self.q.put([ana,ens])
       
 
@@ -96,11 +95,7 @@ if __name__ == '__main__':
             else:
                 stocker.append(mot)
     f.close()
-    
-    #print('Dico Téléchargé',end='\n')
-    #print(
-    #      [len(stocker1),len(stocker2),len(stocker3),len(stocker4),len(stocker5),len(stocker6),len(stocker7),len(stocker8),len(stocker9),len(stocker10),len(stocker)])
-
+   
     D = [stocker1,stocker2,stocker3,stocker4,stocker5,stocker6,stocker7,stocker8,stocker9,stocker10,stocker11,stocker12,stocker13,stocker14,stocker]
     q=multiprocessing.Queue()
     tasks=[ MyProcess(L,D.index(L)+1,q) for L in D]
